@@ -5,7 +5,9 @@ import * as queries from "../../constants/queries";
 // მუტაციის დროს 4 სხვადასხვა მომენტი გვაქვს, 4ვეს გამოყენება არაა სავალდებულო,
 // onSuccess ის დროს რეალურად უკვე რესპონსი ბრუნდება და მაგ დროს შეგვიძლია შეცვალოთ რეალური დატა
 
-// თუ Optimistic update გავკეთებ ეს კოდი უფრო მარტივდება
+// თუ Optimistic update გავკეთებ ეს კოდი უფრო მარტივდება, რაღაც დოზით
+
+// onSuccess ში ჩავამატეთ რესპონსიდან დაბრუნებული დატა, მასივში
 
 const useCreatePost = () => {
   const queryClient = useQueryClient();

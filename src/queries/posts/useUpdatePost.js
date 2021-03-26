@@ -2,6 +2,8 @@ import { useMutation, useQueryClient } from "react-query";
 import * as postsService from "../../services/postsService";
 import * as queries from "../../constants/queries";
 
+// შეგვიძლია როგორც კონკრეტულ ობიქტში ჩაწერა ასევე, საერთო მასივში ახალი ელემენტით ჩანაცვლება
+
 const useUpdatePost = () => {
   const queryClient = useQueryClient();
 

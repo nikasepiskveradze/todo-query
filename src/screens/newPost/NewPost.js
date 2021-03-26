@@ -1,70 +1,54 @@
 import React from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import usePost from "../../queries/posts/usePost";
-import { useState } from "react";
-import useCreatePost from "../../queries/posts/useCreatePost";
-import useUpdatePost from "../../queries/posts/useUpdatePost";
-import { useEffect } from "react";
+import useNewPostForm from "./useNewPostForm";
+import Spinner from "../../components/spinner/Spinner";
 
 const NewPost = (props) => {
-  const history = useHistory();
   const { postId } = useParams();
-
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
-
   const postQuery = usePost(Number(postId));
-  const createPost = useCreatePost();
-  const updatePost = useUpdatePost();
-
-  // Populate data into inputs
-  useEffect(() => {
-    if (postQuery.data) {
-      setTitle(postQuery.data.title);
-      setBody(postQuery.data.body);
-    }
-  }, [postQuery.data]);
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    const post = { title, body };
-
-    if (!Number(postId)) {
-      createPost.mutate(post);
-    } else {
-      updatePost.mutate({ id: postId, ...post });
-    }
-
-    history.push("/");
-  };
+  const { values, handleChange, handleSubmit } = useNewPostForm(postQuery);
 
   if (postQuery.isLoading) {
-    return "Loading...";
+    return <Spinner />;
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        Title
-        <input
-          name="title"
-          value={title}
-          onChange={(event) => setTitle(event.target.value)}
-        />
-      </div>
+    <div className="container mt-3 w-50 p-3 card">
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <label htmlFor="title" className="form-label">
+            Title
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="title"
+            name="title"
+            value={values.title}
+            onChange={handleChange}
+          />
+        </div>
 
-      <div>
-        Body
-        <input
-          name="body"
-          value={body}
-          onChange={(event) => setBody(event.target.value)}
-        />
-      </div>
+        <div className="mb-3">
+          <label htmlFor="body" className="form-label">
+            Body
+          </label>
+          <input
+            type="body"
+            className="form-control"
+            id="body"
+            name="body"
+            value={values.body}
+            onChange={handleChange}
+          />
+        </div>
 
-      <button type="submit">Submit</button>
-    </form>
+        <button type="submit" className="btn btn-primary">
+          Submit
+        </button>
+      </form>
+    </div>
   );
 };
 
