@@ -14,8 +14,8 @@ const Post = (props) => {
 
   return (
     <div className="container mt-3 w-50">
-      <h1>{postQuery.data.title}</h1>
-      <div>{postQuery.data.body}</div>
+      <h1>{postQuery.data?.title}</h1>
+      <div>{postQuery.data?.body}</div>
 
       <button className="mt-3 btn btn-primary" onClick={() => history.goBack()}>
         Back
